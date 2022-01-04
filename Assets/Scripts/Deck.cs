@@ -7,6 +7,8 @@ using System.Linq;
 public class Deck : MonoBehaviour
 {
     #region Variables
+    
+
     public int deckQuantity = 6; //Mostly used 6 to 8.
 
     [SerializeField]
@@ -40,8 +42,8 @@ public class Deck : MonoBehaviour
         CardData tempCd;
         for (int i = 0; i < 50; i++)
         {
-            var index1 = rn1.Next(0, listOfCards.Count());
-            var index2 = rn1.Next(0, listOfCards.Count());
+            var index1 = rn1.Next(0, listOfCards.Count()-1);
+            var index2 = rn1.Next(0, listOfCards.Count()-1);
 
             tempCd = listOfCards[index1];
             listOfCards[index1] = listOfCards[index2];
@@ -49,18 +51,22 @@ public class Deck : MonoBehaviour
         }
     }
 
-    public CardData PickCard()
+    public void PickCard()//public CardData PickCard()
     {
         var card = listOfCards.First();
         listOfCards.Remove(card);
-        return card;
+        Debug.Log(card.ToString());
+        //return card;
     }
 
     #endregion
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.F1))
+            Shuffle();
+        if (Input.GetKeyDown(KeyCode.F2))
+            PickCard();
     }
 
     [Serializable]
