@@ -95,3 +95,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2148a43ca35b14383f041be96276c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deckQuantity: 6
+  listOfCards: []

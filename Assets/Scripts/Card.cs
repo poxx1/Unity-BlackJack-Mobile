@@ -25,4 +25,9 @@ public class Card : MonoBehaviour
     {
         
     }
+
+    public override string ToString()
+    {
+        return $"Num: {number} - Sym: {symbol}";
+    }
 }
