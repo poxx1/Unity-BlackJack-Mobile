@@ -24,8 +24,8 @@ public class Deck : MonoBehaviour
         for (int i = 0; i < deckQuantity; i++)
         {
             CreateDeck();
+            Shuffle();
         }
-        Shuffle();
     }
 
     #region Methods
