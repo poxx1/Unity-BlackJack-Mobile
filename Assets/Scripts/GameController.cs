@@ -25,19 +25,22 @@ public class GameController : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F2))
-            Restc(player,playerCounter);
+            DealCard(player,playerCounter);
         if (Input.GetKeyDown(KeyCode.F3))
-            Restc(dealer,dealerCounter);
+            DealCard(dealer,dealerCounter);
         if (Input.GetKeyDown(KeyCode.F4))
             Reset();
     }
 
-    public void Restc(GameObject pj, Text count)
+    public void DealCard(GameObject player, Text count)
     {
-        var pjComponent = pj.GetComponent<Player>();
-        var card = deck.GetComponent<Deck>().PickCardAsGameObject();
+        // Deal card to player
+        var pjComponent = player.GetComponent<Player>();
+        var card = deck.GetComponent<Deck>().PickCardAsGameObject().GetComponent<Card>();
         pjComponent.AddCard(card);
-        var score = CalculateScore(pjComponent.GetCards().Select(x=>x.GetComponent<Card>()).ToList());
+        
+        // Update hand's score
+        var score = CalculateScore(pjComponent.GetCards());
         count.text = score.ToString();
     }
 
@@ -48,11 +51,11 @@ public class GameController : MonoBehaviour
 
         foreach (var card in pepito.GetCards())
         {
-            Destroy(card);
+            Destroy(card.gameObject);
         }
         foreach (var card in robertito.GetCards())
         {
-            Destroy(card);
+            Destroy(card.gameObject);
         }
 
         dealerCounter.text = 0.ToString();
@@ -65,11 +68,11 @@ public class GameController : MonoBehaviour
     public int CalculateScore(List<Card> listCards)
     {
         var total = listCards.Aggregate(0, (acc, card) => {
-            var value = Math.Min(card.number + 1, 10);
+            var value = Math.Min(card.Number + 1, 10);
             return acc+ value + (value==1 ? 10:0);
         });
 
-        var acesQuantity = listCards.Count(x => x.number == 0);
+        var acesQuantity = listCards.Count(x => x.Number == 0);
 
         while(total > 21 && acesQuantity>0)
         {

@@ -35,7 +35,7 @@ public class Deck : MonoBehaviour
         {
             for (int j = 0; j < 13; j++)
             {
-                listOfCards.Add(new CardData() { number = j, symbol = i });
+                listOfCards.Add(new CardData() { Number = j, Symbol = i });
             }
         }
     }
@@ -53,7 +53,7 @@ public class Deck : MonoBehaviour
         }
     }
 
-    public CardData PickCard()
+    private CardData PickCard()
     {
         var card = listOfCards.First();
         listOfCards.Remove(card);
@@ -66,14 +66,17 @@ public class Deck : MonoBehaviour
         var card = PickCard();
         var obj = Instantiate(cardPrefab);
 
-        int imageIndex = card.number+card.symbol*13;
+        int imageIndex = card.Number + card.Symbol*13;
         var imageSprite = cardSprites[imageIndex];
 
-        obj.GetComponent<SpriteRenderer>().sprite = imageSprite;
-        obj.GetComponent<Card>().number = card.number;
-        obj.GetComponent<Card>().symbol = card.symbol;
+        // obj.GetComponent<SpriteRenderer>().sprite = imageSprite;
 
-        obj.transform.position = new Vector3(transform.position.x + counter * 0.5f, 0, -1 * counter * 0.1f);
+        var cardScript = obj.GetComponent<Card>();
+        cardScript.SpriteCard = imageSprite;
+        cardScript.Number = card.Number;
+        cardScript.Symbol = card.Symbol;
+
+        obj.transform.position = transform.position;
 
         counter++;
         //Debug.Log(card.ToString());
@@ -93,14 +96,14 @@ public class Deck : MonoBehaviour
     public class CardData 
     {
         [SerializeField]
-        public int number { get; set; }
+        public int Number { get; set; }
 
         [SerializeField]
-        public int symbol { get; set; }
+        public int Symbol { get; set; }
 
         public override string ToString()
         {
-            return "N: " + number + " S: " + symbol;
+            return "N: " + Number + " S: " + Symbol;
         }
     }
 }
