@@ -22,6 +22,8 @@ public class Card : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
 
+    public bool IsVisible { get; set; } = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +58,7 @@ public class Card : MonoBehaviour
                 _spriteRenderer.sprite = _newSpriteAfterFlip;
                 if (transform.localScale.x == 0f)
                 {
+                    IsVisible = true;
                     Flip();
                 }
             }
